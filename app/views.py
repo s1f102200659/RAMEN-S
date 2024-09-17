@@ -7,4 +7,8 @@ def account_view(request):
         'account_number': '0000000',
         'balance': '50,000円',
     }
-    return render(request, 'account.html', context)
+    return render(request, 'home.html', context)
+
+
+def send_money_view(request):
+    return render(request, 'sendmoney.html')

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Information</title>
     {% load static %}
-    <!-- 引入外部的CSS文件 -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
     <div class="account-container">
@@ -16,6 +15,19 @@
         <div class="account-name">サンプル 氏名</div>
         <div class="account-info">口座番号 : 0000000</div>
         <div class="balance-container">50,000円</div>
+
+        <!-- 添加按钮 -->
+        <div class="button-container">
+            <a href="#" class="custom-button">
+                <span class="icon">📂</span> 送金する <span class="arrow">➔</span>
+            </a>
+            <a href="#" class="custom-button">
+                請求する <span class="arrow">➔</span>
+            </a>
+            <a href="#" class="custom-button">
+                請求履歴 <span class="arrow">➔</span>
+            </a>
+        </div>
     </div>
 </body>
 </html>
