@@ -7,3 +7,6 @@ def index(request):
 
 def home(request):
     return render(request, 'app/home.html')
+
+def linked(request):
+    return render(request, 'app/linked.html')
