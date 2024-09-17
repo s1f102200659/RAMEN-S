@@ -8,6 +8,8 @@ def index(request):
 def home(request):
     return render(request, 'app/home.html')
 
+def linked(request):
+    return render(request, 'app/linked.html')
 def billing_history(request):
     bills = [
         {'date': '2024-09-01', 'amount': 5000, 'message': 'ランチ代', 'paid_users': [
