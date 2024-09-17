@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Information</title>
+    {% load static %}
+    <!-- 引入外部的CSS文件 -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="account-container">
+        <div class="profile-pic">
+            <img src="{% static 'app/images/profile.png' %}" alt="Profile Picture">
+        </div>
+        <div class="account-name">サンプル 氏名</div>
+        <div class="account-info">口座番号 : 0000000</div>
+        <div class="balance-container">50,000円</div>
+    </div>
+</body>
+</html>
