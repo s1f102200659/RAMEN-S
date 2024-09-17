@@ -10,3 +10,9 @@ def home(request):
 
 def check_link(request):
     return render(request, 'app/check_link.html')
+
+def send_money_view(request):
+    return render(request, 'sendmoney.html')
+
+def select_recipient_view(request):
+    return render(request, 'friendslist.html')
