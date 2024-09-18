@@ -56,8 +56,8 @@ def check_link(request):
 def send_money_view(request,user_id):
     return render(request, 'app/sendmoney.html', {'user_id': user_id})
 
-def select_recipient_view(request):
-    return render(request, 'app/friendslist.html')
+def select_recipient_view(request,user_id):
+    return render(request, 'app/friendslist.html', {'user_id': user_id})
 
 def sendfinish_view(request):
     return render(request, 'app/sendfinish.html')
