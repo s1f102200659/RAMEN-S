@@ -1,3 +1,8 @@
 RAMEN-S/app/__pycache__/
 __pycache__/
 *.pyc
+**/__pycache__/
+.venv
+RAMEN-S/app/__pycache__/
+__pycache__/
+*.pyc

@@ -1,3 +1,5 @@
+from .forms import InvoiceCreateForm
+from .models import Invoice
 from django.http import HttpResponse
 from django.shortcuts import render
 from app.models import User,Invoice,Payment
@@ -15,13 +17,26 @@ def home(request,user_id):
     }
     return render(request, 'app/home.html',context)
 
-
 def request(request,user_id):
-    return render(request, 'app/request.html',{'user_id': user_id})
+    form = InvoiceCreateForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        user_id = request.POST.get('user_id')  # hidden フィールドから取得
+        invoice = form.save(commit=False)
+        invoice.user_id = user_id
+        invoice.save()
+        return redirect('check_link')
+
+    context = {
+        'form': form,
+        'user_id': user_id
+    }
+
+    return render(request, 'app/request.html', context)
 
 def linked(request):
     return render(request, 'app/linked.html')
-  
+
 def billing_history(request,user_id):
     bills = [
         {'date': '2024-09-01', 'amount': 5000, 'message': 'ランチ代', 'paid_users': [
@@ -30,7 +45,7 @@ def billing_history(request,user_id):
         {'date': '2024-09-05', 'amount': 12000, 'message': '飲み会', 'paid_users': [
             {'icon': 'images/human2.png'},
             {'icon': 'images/human3.png'}
-        ]}, 
+        ]},
         # 他の請求履歴データ
     ]
     return render(request, 'app/billing_history.html', {'bills': bills,'user_id': user_id})
@@ -46,8 +61,6 @@ def select_recipient_view(request,user_id):
 
 def sendfinish_view(request):
     return render(request, 'app/sendfinish.html')
-
-
 
 def sendmoney_process(request):
     # if request.method == 'POST':
@@ -74,7 +87,7 @@ def sendmoney_process(request):
     # 如果不是 POST 请求，则重定向到送金页面
     # return redirect('sendfinish')
     # return redirect('send_money')
-    
+
     try:
         recipient_name = request.POST.get('recipient_name')
         print(1)
@@ -94,3 +107,5 @@ def sendmoney_process(request):
     finally:
         return redirect('sendfinish')
 
+def transfer_complete_view(request):
+    return render(request, 'app/sendfinish.html')
