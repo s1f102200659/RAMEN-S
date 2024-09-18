@@ -28,7 +28,13 @@
             </div>
         </div>
 
-        <button class="send-button" type="submit">送金</button>
+        {% comment %} <button class="send-button" type="submit">送金</button> {% endcomment %}
+
+        <div class="button-container">
+            <a href="{% url 'sendfinish' %}" class="send-button">
+                送金
+            </a>
+        </div>
     </div>
 </body>
 </html>
