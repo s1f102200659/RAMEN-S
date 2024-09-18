@@ -14,3 +14,6 @@ def send_money_view(request):
 def select_recipient_view(request):
     return render(request, 'friendslist.html')
 
+def transfer_complete_view(request):
+    return render(request, 'sendfinish.html')
+
