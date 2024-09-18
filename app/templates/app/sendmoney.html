@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>送金ページ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/sendmoney.css' %}">
+</head>
+<body>
+    <div class="send-money-container">
+        <h2>送金先</h2>
+        <div class="profile-pic">
+            <img src="{% static 'images/human2.png' %}" alt="Recipient Picture">
+        </div>
+        <div class="recipient-name">サンプル 氏名</div>
+
+        <div class="limit-container">
+            <p>送金上限額</p>
+            <p class="limit-amount">50,000円</p>
+        </div>
+
+        <div class="amount-input-container">
+            <label for="amount">送金金額</label>
+            <div class="input-wrapper">
+                <input type="text" id="amount" placeholder="金額">
+                <span class="currency">円</span>
+            </div>
+        </div>
+
+        {% comment %} <button class="send-button" type="submit">送金</button> {% endcomment %}
+
+        <div class="button-container">
+            <a href="{% url 'sendfinish' %}" class="send-button">
+                送金
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-info {
+    background-color: white;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.status-icons {
+    display: flex;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.account-number {
+    font-size: 14px;
+    color: #666;
+}
+
+.balance {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.balance-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.balance-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button {
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #f0f0f0;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.custom-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button:hover {
+    background-color: #e0e0e0;
+}
