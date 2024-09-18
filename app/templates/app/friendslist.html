@@ -6,56 +6,74 @@
     <title>送金相手を選択</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/friendslist.css' %}">
+    <style>
+        .recipient-item {
+            display: block; /* 使整个块级元素都可点击 */
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            text-decoration: none; /* 去掉链接的默认下划线 */
+            color: inherit; /* 保持文字颜色 */
+            transition: background-color 0.3s ease;
+        }
+
+        .recipient-item:hover {
+            background-color: #f1f1f1; /* 鼠标悬停效果 */
+        }
+
+        .profile-pic {
+            float: left; /* 头像左对齐 */
+            margin-right: 10px; /* 和姓名保持一定间距 */
+        }
+
+        .recipient-name {
+            font-size: 1.2em;
+            line-height: 60px; /* 让名字垂直居中 */
+        }
+
+        .recipient-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <div class="recipient-container">
         <h2>送金相手を選択</h2>
 
         <!-- 每个收款人信息块 -->
-        <div class="recipient-item">
-            <a href="/app/sendmoney/?img=images/human1.png&name=サンプル 氏名1">
-                <div class="profile-pic">
-                    <img src="{% static 'images/human1.png' %}" alt="human 1">
-                </div>
-                <div class="recipient-name">サンプル 氏名1</div>
-            </a>
-        </div>
+        <a class="recipient-item" href="{% url 'sendmoney' user_id %}?img=images/human1.png&name=氏名1">
+            <div class="profile-pic">
+                <img src="{% static 'images/human1.png' %}" alt="human 1">
+            </div>
+            <div class="recipient-name">氏名1</div>
+        </a>
 
-        <div class="recipient-item">
-            <a href="/app/sendmoney/?img=images/human2.png&name=サンプル 氏名2">
-                <div class="profile-pic">
-                    <img src="{% static 'images/human2.png' %}" alt="human 2">
-                </div>
-                <div class="recipient-name">サンプル 氏名2</div>
-            </a>
-        </div>
+        <a class="recipient-item" href="{% url 'sendmoney' user_id %}?img=images/human2.png&name=氏名2">
+            <div class="profile-pic">
+                <img src="{% static 'images/human2.png' %}" alt="human 2">
+            </div>
+            <div class="recipient-name">氏名2</div>
+        </a>
 
-        <div class="recipient-item">
-            <a href="/app/sendmoney/?img=images/human3.png&name=サンプル 氏名3">
-                <div class="profile-pic">
-                    <img src="{% static 'images/human3.png' %}" alt="human 3">
-                </div>
-                <div class="recipient-name">サンプル 氏名3</div>
-            </a>
-        </div>
+        <a class="recipient-item" href="{% url 'sendmoney' user_id %}?img=images/human3.png&name=氏名3">
+            <div class="profile-pic">
+                <img src="{% static 'images/human3.png' %}" alt="human 3">
+            </div>
+            <div class="recipient-name">氏名3</div>
+        </a>
 
-        <div class="recipient-item">
-            <a href="/app/sendmoney/?img=images/human4.png&name=サンプル 氏名4">
-                <div class="profile-pic">
-                    <img src="{% static 'images/human4.png' %}" alt="human 4">
-                </div>
-                <div class="recipient-name">サンプル 氏名4</div>
-            </a>
-        </div>
-
-        <div class="recipient-item">
-            <a href="/app/sendmoney/?img=images/human5.png&name=サンプル 氏名5">
-                <div class="profile-pic">
-                    <img src="{% static 'images/human5.png' %}" alt="human 5">
-                </div>
-                <div class="recipient-name">サンプル 氏名5</div>
-            </a>
-        </div>
+        <a class="recipient-item" href="{% url 'sendmoney' user_id %}?img=images/human4.png&name=氏名4">
+            <div class="profile-pic">
+                <img src="{% static 'images/human4.png' %}" alt="human 4">
+            </div>
+            <div class="recipient-name">氏名4</div>
+        </a>
     </div>
 </body>
 </html>
