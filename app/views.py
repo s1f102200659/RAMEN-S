@@ -13,8 +13,6 @@ def request(request):
 
 def linked(request):
     return render(request, 'app/linked.html')
-  
-from .models import Invoice, Payment, User
 
 def billing_history(request, user_id):
     # user_idが作成した請求一覧を取得
