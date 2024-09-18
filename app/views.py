@@ -32,11 +32,11 @@ def check_link(request):
     return render(request, 'app/check_link.html')
 
 def send_money_view(request):
-    return render(request, 'sendmoney.html')
+    return render(request, 'app/sendmoney.html')
 
 def select_recipient_view(request):
-    return render(request, 'friendslist.html')
+    return render(request, 'app/friendslist.html')
 
 def transfer_complete_view(request):
-    return render(request, 'sendfinish.html')
+    return render(request, 'app/sendfinish.html')
 
