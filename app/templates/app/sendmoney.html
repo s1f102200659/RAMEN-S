@@ -6,35 +6,54 @@
     <title>送金ページ</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/sendmoney.css' %}">
+    <script>
+        // 获取URL参数的函数
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // 在页面加载时动态更新头像和姓名
+        window.onload = function() {
+            const imgSrc = getQueryParam('img');
+            const name = getQueryParam('name');
+
+            if (imgSrc && name) {
+                document.getElementById('recipient-img').src = "{% static '' %}" + imgSrc;
+                document.getElementById('recipient-name').textContent = name;
+                document.getElementById('recipient-name-input').value = name;  // 传递给后台
+            }
+        };
+    </script>
 </head>
 <body>
     <div class="send-money-container">
         <h2>送金先</h2>
         <div class="profile-pic">
-            <img src="{% static 'images/human2.png' %}" alt="Recipient Picture">
+            <img id="recipient-img" src="{% static 'images/human1.png' %}" alt="Recipient Picture">
         </div>
-        <div class="recipient-name">サンプル 氏名</div>
-
-        <div class="limit-container">
-            <p>送金上限額</p>
-            <p class="limit-amount">50,000円</p>
-        </div>
-
-        <div class="amount-input-container">
-            <label for="amount">送金金額</label>
-            <div class="input-wrapper">
-                <input type="text" id="amount" placeholder="金額">
-                <span class="currency">円</span>
+        <div id="recipient-name" class="recipient-name">サンプル 氏名</div>
+        <form method="POST" action="{% url 'sendmoney_process' %}">
+            {% csrf_token %}
+            <input type="hidden" id="recipient-name-input" name="recipient_name">
+            
+            <div class="limit-container">
+                <p>送金上限額</p>
+                <p class="limit-amount">50,000円</p>
             </div>
-        </div>
 
-        {% comment %} <button class="send-button" type="submit">送金</button> {% endcomment %}
+            <div class="amount-input-container">
+                <label for="amount">送金金額</label>
+                <div class="input-wrapper">
+                    <input type="number" id="amount" name="amount" placeholder="金額" required>
+                    <span class="currency">円</span>
+                </div>
+            </div>
 
-        <div class="button-container">
-            <a href="{% url 'sendfinish' %}" class="send-button">
-                送金
-            </a>
-        </div>
+            <div class="button-container">
+                <button type="submit" class="send-button">送金</button>
+            </div>
+        </form>
     </div>
 </body>
 </html>
