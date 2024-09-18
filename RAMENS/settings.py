@@ -55,8 +55,8 @@ ROOT_URLCONF = 'RAMENS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates'],  # 可以直接查找项目根目录中的 templates 文件夹
+        'APP_DIRS': True,  # 确保Django能在app目录中查找templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
