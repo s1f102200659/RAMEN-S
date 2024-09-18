@@ -92,7 +92,13 @@ h2 {
     color: #666;
 }
 
+.button-container {
+    width: 100%;
+    text-align: center;
+}
+
 .send-button {
+    display: inline-block;
     background-color: #ccc;
     border: none;
     border-radius: 20px;
@@ -100,9 +106,27 @@ h2 {
     width: 100%;
     font-size: 16px;
     color: white;
+    text-decoration: none;
     cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
 }
 
 .send-button:hover {
     background-color: #bbb;
+}
+
+.send-button .icon {
+    margin-right: 8px; /* 图标与文字之间的间距 */
+    display: inline-block;
+    width: 16px; /* 根据需要调整图标大小 */
+    height: 16px;
+    background-image: url('icon-url'); /* 替换为你的图标 URL */
+    background-size: cover;
+}
+
+.send-button .arrow {
+    margin-left: 8px;
+    font-size: 16px; /* 确保箭头大小与文字一致 */
+    color: white;
 }
