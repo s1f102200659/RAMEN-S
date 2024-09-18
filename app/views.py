@@ -72,11 +72,16 @@ def sendmoney_process(request):
     
     try:
         recipient_name = request.POST.get('recipient_name')
+        print(1)
         amount = float(request.POST.get('amount'))
+        print(2)
 
         recipient = get_object_or_404(User, name=recipient_name)
+        print(3)
         recipient.balance += amount
+        print(4)
         recipient.save()
+        print(5)
     except Exception as e:
         print(e)
         messages.error(request, '送金金額が無効です。')
