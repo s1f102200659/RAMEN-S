@@ -15,14 +15,37 @@
             <div class="col-12 col-md-8">
                 <div class="container">
                     <p class="link-header">請求リンクが作成されました</p>
-                    <p class="link-text">（請求リンクをここに表示する）</p>
-                    <button class="copy-btn">リンクをコピー</button>
-                    <button class="return-btn">トップ画面に戻る</button>
+                    <p class="link-text" id="urlText">{{ url }}</p>
+                    <button class="copy-btn" id="copyButton">リンクをコピー</button>
+                    <a href="{% url 'home' user_id %}">
+                        <button class="return-btn">トップ画面に戻る</button>
+                    </a>
                 </div>
             </div>
             <div class="col-md-2"></div>
         </div>
     </div>
+    <script>
+        document.getElementById("copyButton").addEventListener("click", function() {
+            // コピーしたいURLを取得
+            var copyText = document.getElementById("urlText").textContent;
+
+            // 一時的なテキストエリアを作成
+            var tempTextArea = document.createElement("textarea");
+            tempTextArea.value = copyText;
+            document.body.appendChild(tempTextArea);
+
+            // テキストを選択してコピー
+            tempTextArea.select();
+            document.execCommand("copy");
+
+            // 一時的なテキストエリアを削除
+            document.body.removeChild(tempTextArea);
+
+            // コピー完了の通知（オプション）
+            alert("リンクがコピーされました: " + copyText);
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
