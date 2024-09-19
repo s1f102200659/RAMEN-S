@@ -32,7 +32,7 @@ def invoice(request,user_id):
         invoice_id = invoice.ID
         
         url = reverse('check_link')
-        return redirect(f'{url}?id={invoice_id}&user={user_id}')
+        return redirect(f'{url}?inv_id={invoice_id}&user={user_id}')
     context = {
         'form': form,
         'user_id': user_id
@@ -123,7 +123,7 @@ def billing_history(request, user_id):
 def check_link(request):
     current_url = request.build_absolute_uri()
     user_id = request.GET.get('user')
-    invoice_id = request.GET.get('id')
+    invoice_id = request.GET.get('inv_id')
     if user_id is None:
         return HttpResponse("User ID is missing")
     return render(request, 'app/check_link.html',{'url':current_url,'user_id':user_id,'invoice_id':invoice_id})
