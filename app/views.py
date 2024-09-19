@@ -110,29 +110,33 @@ def sendfinish_view2(request):
 
 
 
+# def sendmoney_process(request, user_id):
+#     # 处理发送逻辑
+#     return render(request, 'app/sendfinish.html', {'user_id': user_id})
+
 def sendmoney_process(request, user_id):
-    # 处理发送逻辑
-    return render(request, 'app/sendfinish.html', {'user_id': user_id})
-
-
-    try:
-        recipient_name = request.POST.get('recipient_name')
-        print(1)
+    if request.method == 'POST':
+        # 获取送金金额
         amount = float(request.POST.get('amount'))
-        print(2)
+        
+        # 获取送金对象（根据 user_id 查询）
+        user = get_object_or_404(User, ID=user_id)
 
-        recipient = get_object_or_404(User, name=recipient_name)
-        print(3)
-        recipient.balance += amount
-        print(4)
-        recipient.save()
-        print(5)
-    except Exception as e:
-        print(e)
-        messages.error(request, '送金金額が無効です。')
-        return redirect('send_money')
-    finally:
-        return redirect('sendfinish')
+        # 检查用户余额是否足够
+        if user.balance >= amount:
+            # 扣除金额
+            user.balance -= amount
+            user.save()  # 保存更新后的余额
+
+            # 显示成功信息
+            messages.success(request, f'{amount}円が正常に送金されました！')
+        else:
+            # 余额不足，显示错误信息
+            messages.error(request, '残高不足です。')
+
+        # 重定向到某个页面或返回确认页面
+        return render(request, 'app/sendfinish.html', {'user_id': user_id})  # 假设你有一个完成页面
+
 
 
 
