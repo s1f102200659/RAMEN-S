@@ -135,7 +135,11 @@ def check_link(request):
 
 
 def send_money_view(request,user_id):
-    return render(request, 'app/sendmoney.html', {'user_id': user_id})
+    
+    user = get_object_or_404(User, ID=user_id)
+    
+    
+    return render(request, 'app/sendmoney.html', {'user_id': user_id, 'user': user})
 
 def select_recipient_view(request,user_id):
     return render(request, 'app/friendslist.html', {'user_id': user_id})
@@ -178,4 +182,12 @@ def sendmoney_process(request, user_id):
 
 
 
+def sendmoney(request, user_id):
+    # 获取对应的用户对象
+    user = get_object_or_404(User, id=user_id)
 
+    # 将用户的 balance 传递给模板
+    context = {
+        'user': user,  # 传递 user 对象
+    }
+    return render(request, 'sendmoney.html', context)
