@@ -15,7 +15,7 @@
             <div class="col-12 col-md-8">
                 <div class="container">
                     <p class="link-header">請求リンクが作成されました</p>
-                    <p class="link-text" id="urlText">http://127.0.0.1:8000/app/linked/?id={{ invoice_id }}&user={{ user_id }}                    </p>
+                    <p class="link-text" id="urlText">http://127.0.0.1:8000/app/linked/?inv_id={{ invoice_id }}&user={{ user_id }}                    </p>
                     <button class="copy-btn" id="copyButton">リンクをコピー</button>
                     <a href="{% url 'home' user_id %}">
                         <button class="return-btn">トップ画面に戻る</button>
