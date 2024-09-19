@@ -21,7 +21,7 @@ def home(request,user_id):
     }
     return render(request, 'app/home.html',context)
 
-def request(request,user_id):
+def invoice(request,user_id):
     form = InvoiceCreateForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
@@ -38,7 +38,7 @@ def request(request,user_id):
         'user_id': user_id
     }
 
-    return render(request, 'app/request.html', context)
+    return render(request, 'app/invoice.html', context)
 
 def linked(request):
     inv_id = request.GET.get('inv_id')
