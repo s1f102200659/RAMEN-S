@@ -16,5 +16,4 @@ urlpatterns = [
     path('sendmoney/', views.send_money_view, name='send_money'),
     path('friendslist/', views.select_recipient_view, name='friendslist'),
     path('billing_history/<int:user_id>/', views.billing_history, name='billing_history'),
-    path('sendfinish/', views.transfer_complete_view, name='sendfinish'),
 ]
