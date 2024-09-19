@@ -2,6 +2,7 @@ from .forms import InvoiceCreateForm
 from .models import Invoice
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Invoice, Payment, User
 from app.models import User,Invoice,Payment
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -33,6 +34,11 @@ def request(request,user_id):
     }
 
     return render(request, 'app/request.html', context)
+def home(request):
+    return render(request, 'app/home.html')
+
+def request(request):
+    return render(request, 'app/request.html')
 
 def linked(request):
     # デフォルトの請求書IDとユーザーID
@@ -92,6 +98,27 @@ def billing_history(request,user_id):
         # 他の請求履歴データ
     ]
     return render(request, 'app/billing_history.html', {'bills': bills,'user_id': user_id})
+    return render(request, 'app/linked.html')
+
+def billing_history(request, user_id):
+    # user_idが作成した請求一覧を取得
+    invoices = Invoice.objects.filter(user_id=user_id)
+    bills = []
+    
+    for invoice in invoices:
+        # 各請求に対して支払ったユーザーの一覧を取得
+        payments = Payment.objects.filter(Invoice_id=invoice.ID)
+        paid_users = [{'icon': User.objects.get(ID=payment.Invoice_user_id.ID).image_filename} for payment in payments]
+        print(paid_users)
+        
+        bills.append({
+            'date': invoice.date,
+            'amount': invoice.amount,
+            'message': invoice.message,
+            'paid_users': paid_users
+        })
+    
+    return render(request, 'app/billing_history.html', {'bills': bills})
 
 def check_link(request):
     return render(request, 'app/check_link.html')
