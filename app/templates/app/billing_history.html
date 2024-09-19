@@ -13,14 +13,14 @@
         <div class="billing-history">
             {% for bill in bills %}
             <div class="billing-item">
-                <p><strong>送金日:</strong> {{ bill.date }}</p>
+                <p><strong>請求日:</strong> {{ bill.date }}</p>
                 <p><strong>金額:</strong> ¥{{ bill.amount }}</p>
                 <p><strong>メッセージ:</strong> {{ bill.message }}</p>
                 <div class="paid-users">
                     <p><strong>支払済ユーザ:</strong></p>
                     {% for user in bill.paid_users %}
                     <div class="paid-user">
-                        <img src="{% static 'images/' %}{{ user.icon }}.png" alt="ユーザアイコン" class="user-icon">
+                        <img src="{% static 'images/' %}{{ user.icon }}" alt="ユーザアイコン" class="user-icon">
                     </div>
                     {% endfor %}
                 </div>
