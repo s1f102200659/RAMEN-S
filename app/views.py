@@ -6,6 +6,7 @@ from .models import Invoice, Payment, User
 from app.models import User,Invoice,Payment
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.urls import reverse
 
 def index(request):
     return HttpResponse("Hello, Django!")
@@ -26,8 +27,10 @@ def request(request,user_id):
         invoice = form.save(commit=False)
         invoice.user_id = user_id
         invoice.save()
-        return redirect('check_link')
-
+        invoice_id = invoice.ID
+        
+        url = reverse('check_link')
+        return redirect(f'{url}?id={invoice_id}&user={user_id}')
     context = {
         'form': form,
         'user_id': user_id
@@ -121,7 +124,12 @@ def billing_history(request, user_id):
     return render(request, 'app/billing_history.html', {'bills': bills})
 
 def check_link(request):
-    return render(request, 'app/check_link.html')
+    current_url = request.build_absolute_uri()
+    user_id = request.GET.get('user')
+    if user_id is None:
+        return HttpResponse("User ID is missing")
+    return render(request, 'app/check_link.html',{'url':current_url,'user_id':user_id})
+
 
 def send_money_view(request,user_id):
     return render(request, 'app/sendmoney.html', {'user_id': user_id})
