@@ -20,7 +20,7 @@
                     <p><strong>支払済ユーザ:</strong></p>
                     {% for user in bill.paid_users %}
                     <div class="paid-user">
-                        <img src="{% static user.icon %}" alt="ユーザアイコン" class="user-icon">
+                        <img src="{% static 'images/' %}{{ user.icon }}.png" alt="ユーザアイコン" class="user-icon">
                     </div>
                     {% endfor %}
                 </div>
