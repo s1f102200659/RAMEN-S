@@ -86,20 +86,6 @@ def linked(request):
     
     return render(request, 'app/linked.html', context)
 
-def billing_history(request,user_id):
-    bills = [
-        {'date': '2024-09-01', 'amount': 5000, 'message': 'ランチ代', 'paid_users': [
-            {'icon': 'images/human1.png'}
-        ]},
-        {'date': '2024-09-05', 'amount': 12000, 'message': '飲み会', 'paid_users': [
-            {'icon': 'images/human2.png'},
-            {'icon': 'images/human3.png'}
-        ]},
-        # 他の請求履歴データ
-    ]
-    return render(request, 'app/billing_history.html', {'bills': bills,'user_id': user_id})
-    return render(request, 'app/linked.html')
-
 def billing_history(request, user_id):
     # user_idが作成した請求一覧を取得
     invoices = Invoice.objects.filter(user_id=user_id)
@@ -112,7 +98,7 @@ def billing_history(request, user_id):
         print(paid_users)
         
         bills.append({
-            'date': invoice.date,
+            'date': invoice.created_at,
             'amount': invoice.amount,
             'message': invoice.message,
             'paid_users': paid_users
