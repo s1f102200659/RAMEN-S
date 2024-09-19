@@ -123,9 +123,10 @@ def billing_history(request, user_id):
 def check_link(request):
     current_url = request.build_absolute_uri()
     user_id = request.GET.get('user')
+    invoice_id = request.GET.get('id')
     if user_id is None:
         return HttpResponse("User ID is missing")
-    return render(request, 'app/check_link.html',{'url':current_url,'user_id':user_id})
+    return render(request, 'app/check_link.html',{'url':current_url,'user_id':user_id,'invoice_id':invoice_id})
 
 
 def send_money_view(request,user_id):
