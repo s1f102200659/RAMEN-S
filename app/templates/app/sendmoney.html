@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>送金ページ</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/sendmoney.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sendmoney.css' %}" />
     <script>
-        // 获取URL参数的函数
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+      // 获取URL参数的函数
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      // 在页面加载时动态更新头像和姓名
+      window.onload = function () {
+        const imgSrc = getQueryParam("img");
+        const name = getQueryParam("name");
+
+        if (imgSrc && name) {
+          document.getElementById("recipient-img").src =
+            "{% static '' %}" + imgSrc;
+          document.getElementById("recipient-name").textContent = name;
+          document.getElementById("recipient-name-input").value = name; // 传递给后台
         }
-
-        // 在页面加载时动态更新头像和姓名
-        window.onload = function() {
-            const imgSrc = getQueryParam('img');
-            const name = getQueryParam('name');
-
-            if (imgSrc && name) {
-                document.getElementById('recipient-img').src = "{% static '' %}" + imgSrc;
-                document.getElementById('recipient-name').textContent = name;
-                document.getElementById('recipient-name-input').value = name;  // 传递给后台
-            }
-        };
+      };
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="send-money-container">
+
         <h2>送金先</h2>
         <div class="profile-pic">
             <img id="recipient-img" src="{% static 'images/human1.png' %}" alt="Recipient Picture">
@@ -55,5 +57,5 @@
             </div>
         </form>
     </div>
-</body>
+  </body>
 </html>

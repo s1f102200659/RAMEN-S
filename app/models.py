@@ -6,7 +6,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
     account_number = models.CharField(max_length=20)
     balance = models.FloatField()
-    image_filename = models.CharField(max_length=255) 
+    image_filename = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -17,10 +17,10 @@ class Invoice(models.Model):
     user_id = models.IntegerField()  # ユーザーIDの追加（ForeignKeyではなく単純な整数型）
     amount = models.FloatField()
     message = models.CharField(max_length=255)
-    date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Invoice {self.ID} - {self.amount}"
+        return f"Invoice {self.ID} - {self.amount}-{self.created_at}"
 
 # paymentテーブルのモデル
 class Payment(models.Model):
