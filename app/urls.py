@@ -11,6 +11,6 @@ urlpatterns = [
     path('friendslist/<int:user_id>/', views.select_recipient_view, name='friendslist'),
     path('billing_history/<int:user_id>/', views.billing_history, name='billing_history'),
     path('billing_history/', views.billing_history, name='billing_history'),
-    path('sendfinish/', views.sendfinish_view, name='sendfinish'),
-    path('sendmoney_process/', views.sendmoney_process, name='sendmoney_process'),
+    path('sendfinish/<int:user_id>/', views.sendfinish_view, name='sendfinish'),
+    path('sendmoney_process/<int:user_id>/', views.sendmoney_process, name='sendmoney_process'),
 ]
