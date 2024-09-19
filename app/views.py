@@ -48,9 +48,6 @@ def linked(request):
 
     invoice = get_object_or_404(Invoice, ID=inv_id)
     bill_user = get_object_or_404(User, ID=invoice.user_id)
-    # bill_user_balance = bill_user.balance
-    # bill_user_name = bill_user.name
-    # bill_user_image = bill_user.image_filename
 
     # 認証されたユーザーをセッションから取得
     user = None
@@ -90,10 +87,7 @@ def linked(request):
                     Invoice_user_id=user
                 )
 
-                # 支払い成功後、セッションからユーザーIDを削除
-                # request.session.pop('user_id', None)
-                # return render(request, 'app/sendfinish.html', context)
-                return HttpResponse("Payment Success.")
+                return render(request, 'app/sendfinish.html', {'user_id': request.session['user_id']})          
             else:
                 return HttpResponse("Insufficient balance.")
 
@@ -104,6 +98,7 @@ def linked(request):
         'bill_user_image': bill_user.image_filename
     }
     return render(request, 'app/linked.html', context)
+
 
 def billing_history(request, user_id):
     # user_idが作成した請求一覧を取得
