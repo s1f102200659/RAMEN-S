@@ -6,6 +6,8 @@ from app.models import User,Invoice,Payment
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
+import logging
+
 def index(request):
     return HttpResponse("Hello, Django!")
 
@@ -35,49 +37,68 @@ def request(request,user_id):
     return render(request, 'app/request.html', context)
 
 def linked(request):
-    # デフォルトの請求書IDとユーザーID
-    bill_id = 1
-    user_id = request.GET.get('user_id')  # クエリパラメータからuser_idを取得
+    inv_id = request.GET.get('inv_id')
 
-    # 指定された請求書を取得
-    invoice = get_object_or_404(Invoice, ID=bill_id)
-    
+    if not inv_id:
+        return HttpResponse("This link is unavailable.", status=400)
+
+    invoice = get_object_or_404(Invoice, ID=inv_id)
     bill_user = get_object_or_404(User, ID=invoice.user_id)
-    bill_user_name = bill_user.name
-    bill_user_image = bill_user.image_filename
+    # bill_user_balance = bill_user.balance
+    # bill_user_name = bill_user.name
+    # bill_user_image = bill_user.image_filename
 
-    # ユーザーが指定されている場合、ユーザーを取得
-    user_exists = User.objects.filter(ID=user_id).exists()
-    user = get_object_or_404(User, ID=user_id) if user_exists else None
+    # 認証されたユーザーをセッションから取得
+    user = None
+    if request.session.get('user_id'):
+        user = get_object_or_404(User, ID=request.session['user_id'])
 
-    if request.method == 'POST' and user:
-        # 残高が支払い金額以上か確認
-        if user.balance >= invoice.amount:
-            # 残高を減らす
-            user.balance -= invoice.amount
-            user.save()
+    if request.method == 'POST':
+        button_value = request.POST.get('button')
 
-            # 支払い履歴を保存
-            Payment.objects.create(
-                Invoice_id=invoice,
-                Invoice_user_id=user
-            )
+        if button_value == 'auth':
+            user_id = request.POST.get('user_id')
+            if user_id:
+                user_exists = User.objects.filter(ID=user_id).exists()
+                if user_exists:
+                    user = get_object_or_404(User, ID=user_id)
+                    # セッションにユーザーIDを保存
+                    request.session['user_id'] = user_id
 
-            # 支払い完了後、メッセージを表示
-            return HttpResponse("Success.")
-            # return render(request, 'app/home.html')
-        else:
-            return HttpResponse("Insufficient balance.")
-    
-    # テンプレートに渡すデータ
+            context = {
+                'user': user,
+                'invoice': invoice,
+                'bill_user_name': bill_user.name,
+                'bill_user_image': bill_user.image_filename
+            }
+            return render(request, 'app/linked.html', context)
+
+        elif button_value == 'pay' and user:
+            if user.balance >= invoice.amount:
+                user.balance -= invoice.amount
+                user.save()
+                
+                bill_user.balance += invoice.amount
+                bill_user.save()
+
+                Payment.objects.create(
+                    Invoice_id=invoice,
+                    Invoice_user_id=user
+                )
+
+                # 支払い成功後、セッションからユーザーIDを削除
+                # request.session.pop('user_id', None)
+                # return render(request, 'app/sendfinish.html', context)
+                return HttpResponse("Payment Success.")
+            else:
+                return HttpResponse("Insufficient balance.")
+
     context = {
         'user': user,
         'invoice': invoice,
-        'bill_user_name': bill_user_name,
-        'user_exists': user_exists,
-        'bill_user_image': bill_user_image
+        'bill_user_name': bill_user.name,
+        'bill_user_image': bill_user.image_filename
     }
-    
     return render(request, 'app/linked.html', context)
 
 def billing_history(request,user_id):
@@ -102,8 +123,8 @@ def send_money_view(request,user_id):
 def select_recipient_view(request,user_id):
     return render(request, 'app/friendslist.html', {'user_id': user_id})
 
-def sendfinish_view(request):
-    return render(request, 'app/sendfinish.html')
+def sendfinish_view(request, user_id):
+    return render(request, 'app/sendfinish.html', {'user_id': user_id})
 
 def sendmoney_process(request):
     # if request.method == 'POST':
