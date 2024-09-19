@@ -6,4 +6,3 @@ __pycache__/
 RAMEN-S/app/__pycache__/
 __pycache__/
 *.pyc
-db.sqlite3
