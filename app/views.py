@@ -2,6 +2,7 @@ from .forms import InvoiceCreateForm
 from .models import Invoice
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Invoice, Payment, User
 from app.models import User,Invoice,Payment
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -35,6 +36,11 @@ def request(request,user_id):
     }
 
     return render(request, 'app/request.html', context)
+def home(request):
+    return render(request, 'app/home.html')
+
+def request(request):
+    return render(request, 'app/request.html')
 
 def linked(request):
     inv_id = request.GET.get('inv_id')
@@ -113,6 +119,27 @@ def billing_history(request,user_id):
         # 他の請求履歴データ
     ]
     return render(request, 'app/billing_history.html', {'bills': bills,'user_id': user_id})
+    return render(request, 'app/linked.html')
+
+def billing_history(request, user_id):
+    # user_idが作成した請求一覧を取得
+    invoices = Invoice.objects.filter(user_id=user_id)
+    bills = []
+    
+    for invoice in invoices:
+        # 各請求に対して支払ったユーザーの一覧を取得
+        payments = Payment.objects.filter(Invoice_id=invoice.ID)
+        paid_users = [{'icon': User.objects.get(ID=payment.Invoice_user_id.ID).image_filename} for payment in payments]
+        print(paid_users)
+        
+        bills.append({
+            'date': invoice.date,
+            'amount': invoice.amount,
+            'message': invoice.message,
+            'paid_users': paid_users
+        })
+    
+    return render(request, 'app/billing_history.html', {'bills': bills})
 
 def check_link(request):
     return render(request, 'app/check_link.html')
@@ -126,50 +153,39 @@ def select_recipient_view(request,user_id):
 def sendfinish_view(request, user_id):
     return render(request, 'app/sendfinish.html', {'user_id': user_id})
 
-def sendmoney_process(request):
-    # if request.method == 'POST':
-    #     # 获取表单数据
-    #     recipient_name = request.POST.get('recipient_name')
-    #     amount = float(request.POST.get('amount'))
 
-    #     # 查找接收送金的用户
-    #     recipient = get_object_or_404(User, name=recipient_name)
-
-    #     # 假设有业务逻辑来检查送金金额是否有效（例如：不能超过某个上限）
-    #     if amount <= 0 or amount > 50000:
-    #         messages.error(request, '送金金額が無効です。')
-    #         return redirect('sendmoney')
-
-    #     # 更新接收方用户的余额
-    #     recipient.balance += amount
-    #     recipient.save()
-
-    #     # 显示成功消息并跳转
-    #     messages.success(request, f'{recipient_name} に {amount} 円を送金しました。')
-    #     return redirect('sendfinish')
-
-    # 如果不是 POST 请求，则重定向到送金页面
-    # return redirect('sendfinish')
-    # return redirect('send_money')
-
-    try:
-        recipient_name = request.POST.get('recipient_name')
-        print(1)
-        amount = float(request.POST.get('amount'))
-        print(2)
-
-        recipient = get_object_or_404(User, name=recipient_name)
-        print(3)
-        recipient.balance += amount
-        print(4)
-        recipient.save()
-        print(5)
-    except Exception as e:
-        print(e)
-        messages.error(request, '送金金額が無効です。')
-        return redirect('send_money')
-    finally:
-        return redirect('sendfinish')
-
-def transfer_complete_view(request):
+def sendfinish_view2(request):
     return render(request, 'app/sendfinish.html')
+
+
+
+# def sendmoney_process(request, user_id):
+#     # 处理发送逻辑
+#     return render(request, 'app/sendfinish.html', {'user_id': user_id})
+
+def sendmoney_process(request, user_id):
+    if request.method == 'POST':
+        # 获取送金金额
+        amount = float(request.POST.get('amount'))
+        
+        # 获取送金对象（根据 user_id 查询）
+        user = get_object_or_404(User, ID=user_id)
+
+        # 检查用户余额是否足够
+        if user.balance >= amount:
+            # 扣除金额
+            user.balance -= amount
+            user.save()  # 保存更新后的余额
+
+            # 显示成功信息
+            messages.success(request, f'{amount}円が正常に送金されました！')
+        else:
+            # 余额不足，显示错误信息
+            messages.error(request, '残高不足です。')
+
+        # 重定向到某个页面或返回确认页面
+        return render(request, 'app/sendfinish.html', {'user_id': user_id})  # 假设你有一个完成页面
+
+
+
+
