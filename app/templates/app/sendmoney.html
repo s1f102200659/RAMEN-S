@@ -33,7 +33,7 @@
             <img id="recipient-img" src="{% static 'images/human1.png' %}" alt="Recipient Picture">
         </div>
         <div id="recipient-name" class="recipient-name">サンプル 氏名</div>
-        <form method="POST" action="{% url 'sendmoney_process' %}">
+        <form method="POST" action="{% url 'sendmoney_process' user_id=user_id %}">
             {% csrf_token %}
             <input type="hidden" id="recipient-name-input" name="recipient_name">
             
@@ -41,7 +41,7 @@
                 <p>送金上限額</p>
                 <p class="limit-amount">50,000円</p>
             </div>
-
+        
             <div class="amount-input-container">
                 <label for="amount">送金金額</label>
                 <div class="input-wrapper">
@@ -49,7 +49,7 @@
                     <span class="currency">円</span>
                 </div>
             </div>
-
+        
             <div class="button-container">
                 <button type="submit" class="send-button">送金</button>
             </div>

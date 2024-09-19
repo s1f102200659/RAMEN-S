@@ -44,37 +44,22 @@ def send_money_view(request,user_id):
 def select_recipient_view(request,user_id):
     return render(request, 'app/friendslist.html', {'user_id': user_id})
 
-def sendfinish_view(request):
+def sendfinish_view(request, user_id):
+    return render(request, 'app/sendfinish.html', {'user_id': user_id})
+
+def sendfinish_view2(request):
     return render(request, 'app/sendfinish.html')
 
 
 
-def sendmoney_process(request):
-    # if request.method == 'POST':
-    #     # 获取表单数据
-    #     recipient_name = request.POST.get('recipient_name')
-    #     amount = float(request.POST.get('amount'))
 
-    #     # 查找接收送金的用户
-    #     recipient = get_object_or_404(User, name=recipient_name)
 
-    #     # 假设有业务逻辑来检查送金金额是否有效（例如：不能超过某个上限）
-    #     if amount <= 0 or amount > 50000:
-    #         messages.error(request, '送金金額が無効です。')
-    #         return redirect('sendmoney')
+def sendmoney_process(request, user_id):
+    # 处理发送逻辑
+    return render(request, 'app/sendfinish.html', {'user_id': user_id})
 
-    #     # 更新接收方用户的余额
-    #     recipient.balance += amount
-    #     recipient.save()
 
-    #     # 显示成功消息并跳转
-    #     messages.success(request, f'{recipient_name} に {amount} 円を送金しました。')
-    #     return redirect('sendfinish')
 
-    # 如果不是 POST 请求，则重定向到送金页面
-    # return redirect('sendfinish')
-    # return redirect('send_money')
-    
     try:
         recipient_name = request.POST.get('recipient_name')
         print(1)
@@ -93,4 +78,3 @@ def sendmoney_process(request):
         return redirect('send_money')
     finally:
         return redirect('sendfinish')
-
