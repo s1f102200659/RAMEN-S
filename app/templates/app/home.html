@@ -25,16 +25,22 @@
                     </div>
                 </div>
                 <div class="balance">
-                    <p class="name">サンプル 氏名</p>
-                    <p class="account-number">口座番号：0000000</p>
-                    <p class="balance-text">残金表示</p>
-                    <p class="balance-amount">50,000円</p>
-                </div>
+                    <p class="name">{{ user.name }}</p>
+                    <p class="account-number">口座番号：{{ user.account_number }}</p>
+                    <p class="balance-text">残高</p>
+                    <p class="balance-amount">{{ user.balance }}</p>
+                    </div>
                 <div class="buttons">
-                    <button class="button">送金する ー＞</button>
-                    <button class="button">請求する ー＞</button>
-                    <button class="button">請求履歴 ー＞</button>
-                </div>
+                    <a class="button" style="text-decoration: none;" href="{% url 'friendslist' user_id %}">
+                    送金する ー＞
+                    </a>
+                    <a class="button" style="text-decoration: none;" href="{% url 'request' user_id %}">
+                    請求する ー＞
+                    </a>
+                    <a class="button" style="text-decoration: none;" href="{% url 'billing_history' user_id %}">
+                    請求履歴 ー＞
+                    </a>
+                </div> 
             </div>
             </div>
             <div class="col-md-2"></div>
